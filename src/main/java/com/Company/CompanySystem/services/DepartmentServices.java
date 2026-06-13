@@ -4,13 +4,14 @@ package com.Company.CompanySystem.services;
 import com.Company.CompanySystem.customExceptions.ResourceNotFoundException;
 import com.Company.CompanySystem.dto.DepartmentDto;
 import com.Company.CompanySystem.entities.DepartmentEntity;
-import com.Company.CompanySystem.entities.EmployeeEntity;
 import com.Company.CompanySystem.repositories.DepartmentRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DepartmentServices {
@@ -29,12 +30,13 @@ public class DepartmentServices {
         return modelMapper.map(savedDepartment,DepartmentDto.class);
     }
 
-    public List<DepartmentDto> getAllDepartments(String title) {
-        List<DepartmentEntity> allDepartments = departmentRepository.findAll();
+    public List<DepartmentDto> getAllDepartments(String title, int page, int size,String sortBy,String sortDirection) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
+
+        List<DepartmentEntity> allDepartments = departmentRepository.findByTitleContainingIgnoreCase(title,pageable);
         return allDepartments.stream()
                 .map(e-> modelMapper.map(e,DepartmentDto.class))
                 .toList();
-
     }
 
     public DepartmentDto getDepartmentById(Long id) {
