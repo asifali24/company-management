@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeEntity {
+public class EmployeeEntity extends AuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,18 +30,5 @@ public class EmployeeEntity {
     private Boolean isActive;
     private String role;
     private Double salary;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
 
-
-
-    @PrePersist
-    public void PrePersist(){
-        this.createdAt = LocalDate.now();
-        this.updatedAt = LocalDate.now();
-    }
-    @PostUpdate
-    public void postUpdate(){
-        this.updatedAt = LocalDate.now();
-    }
 }

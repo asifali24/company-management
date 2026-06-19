@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(name = "Department",uniqueConstraints = {
         @UniqueConstraint(columnNames = {"title","isActive"})
 })
-public class DepartmentEntity {
+public class DepartmentEntity extends AuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,9 +31,5 @@ public class DepartmentEntity {
 
     @Column(nullable = false)
     private Boolean isActive = true;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }
