@@ -26,7 +26,7 @@ public class Currency {
         return ResponseEntity.status(HttpStatus.OK).body(currencyServices.getCurrencyList());
     }
 
-    @GetMapping("/{from}/convert-to/{toCur}/{amount}")
+    @GetMapping("/{amount}/{from}/convert-to/{toCur}")
     public ResponseEntity<CurrencyConvertResponse> currencyConversion(@PathVariable String from, @PathVariable String toCur, @PathVariable int amount){
         return ResponseEntity.status(HttpStatus.OK).body(currencyServices.currencyConversion(from,toCur,amount));
     }
