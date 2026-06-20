@@ -32,14 +32,13 @@ public class CurrencyServices {
         return (Map<String,Double>) apiResponse.get("data");
     }
 
-    public CurrencyConvertResponse currencyConversion(String from, String toCur, String amount) {
-        System.out.println("********"+ "/v1/latest?apikey=fca_live_8KBRRsJSqVF3ehclgzFRKGTIcJeBfiRvB2aijflr&currencies="+toCur+"&base_currency="+from);
+    public CurrencyConvertResponse currencyConversion(String from, String toCur, int amount) {
         Map<String,Object> apiResponse =  restClient.get()
                 .uri("/v1/latest?apikey=fca_live_8KBRRsJSqVF3ehclgzFRKGTIcJeBfiRvB2aijflr&currencies="+toCur+"&base_currency="+from)
                 .retrieve()
                 .body(new ParameterizedTypeReference<Map<String, Object>>() {
                 });
         Map<String,Double> mapVal =(Map<String, Double>) apiResponse.get("data");
-        return new CurrencyConvertResponse("1 "+from +" is equal to " +mapVal.get(toCur) + " "+ toCur);
+        return new CurrencyConvertResponse(amount +" "+from +" is equal to " + mapVal.get(toCur) *amount + " "+ toCur);
     }
 }
